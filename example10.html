@@ -1,0 +1,36 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <meta name="description" content="Angularjs $scope and array">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-controller="myController">
+       <ul>
+            <li ng-repeat="number in numbers">{{number}}</li>
+       </ul>
+        
+        <ul>
+            <li ng-repeat="car in cars">{{car.name}} - {{car.model}}</li>
+        </ul>
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('myApp',[]);
+        
+        //define myController 
+        app.controller('myController', function($scope){
+            
+            $scope.numbers = ['One','Two','Three'];
+            
+            $scope.cars =[
+                {'name':'Proton','model':'Iriz'},
+                {'name':'Toyota','model':'Vios'},
+                {'name':'Produa','model':'Kancil'},
+                {'name':'Honda','model':'City'}
+            ];
+            
+        });
+    </script>
+    
+</html>

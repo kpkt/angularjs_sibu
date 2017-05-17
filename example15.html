@@ -1,0 +1,32 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <meta name="description" content="AngularJs JSON data">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-controller="myController">
+        <h1>List of Countries</h1>
+        <ul>
+            <li ng-repeat="country in countries">{{country.name}}
+            </li>
+        </ul>
+        
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('myApp',[]);
+        
+        //define myController 
+        app.controller('myController', function($scope, $http){
+            
+            
+            $http.get('countries.json').then(function(results){
+                //console.log(results);
+                $scope.countries = results.data;
+            });
+            
+        });
+    </script>
+    
+</html>

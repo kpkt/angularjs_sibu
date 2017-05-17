@@ -1,0 +1,60 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <meta name="description" content="Angularjs $scope add data array with form">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-controller="myController">
+       <h1>List of car model</h1>
+        Name:<input type="text" ng-model="name"/> 
+        Model:<input type="text" ng-model="model"/>
+        <a href="#" ng-click="new()">Add New Data</a><br/>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Model</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="car in cars">
+                    <td>{{car.name}}</td>
+                    <td>{{car.model}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('myApp',[]);
+        
+        //define myController 
+        app.controller('myController', function($scope){
+            
+            $scope.cars =[
+                {'name':'Proton','model':'Iriz'},
+                {'name':'Toyota','model':'Vios'},
+                {'name':'Produa','model':'Kancil'},
+                {'name':'Honda','model':'City'}
+            ];
+            
+            $scope.new =function(){
+                //alert('OK');
+                //console.log('OK');
+                $scope.cars.push(
+                    {
+                     'name':$scope.name,
+                     'model':$scope.model
+                    }
+                );
+                
+                //clear data input
+                $scope.name = '';
+                $scope.model = '';
+            };
+            
+        });
+    </script>
+    
+</html>

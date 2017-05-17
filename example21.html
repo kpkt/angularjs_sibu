@@ -1,0 +1,46 @@
+<html ng-app>
+    <head>
+        <title></title>
+        <meta name="description" content="Angularjs Form Validation">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <style>
+            input, select{margin: 2px 0} 
+            form span{color: #e74c3c;}
+        </style>
+    </head>
+    <body>
+        <h1>AngularJs Form</h1>
+        <form name="staffForm" novalidate>
+        First Name : <input name="fName" type="text" ng-model="fName" required/>
+        <span ng-show="staffForm.fName.$invalid && !staffForm.fName.$pristine">First Name is required.</span>
+            <br/>
+            
+        Last Name : <input name="lName" type="text" ng-model="lName" required/>
+            <span ng-show="staffForm.lName.$invalid && !staffForm.lName.$pristine">Last Name is required.</span>
+            <br/>
+            
+        Email : <input name="email" type="email" ng-model="email" required/>
+            <span ng-show="(staffForm.email.$invalid && !staffForm.email.$pristine) ||  (staffForm.phone.$touched)"> Email is invalid.</span>
+            <br/>
+            
+        Phone Number : <input name="phone" type="text" ng-model="phone" required ng-minlength="8" ng-maxlength="12"/><br/>
+            <span ng-show="staffForm.phone.$invalid && staffForm.phone.$touched"> Phone Number is required.</span>
+            <span ng-show="staffForm.phone.$error.minlength"> Phone Number is to short.</span>            
+            <span ng-show="staffForm.phone.$error.maxlength"> Phone Number is to long.</span>
+            <br/>
+        Address : <input name="address" type="text" ng-model="address" rows="5" required/>
+            <span ng-show="staffForm.address.$invalid && !staffForm.address.$pristine">Address is required.</span>
+            <br/>
+            
+        Gender : <select name="gender" ng-model="gender" required>
+                    <option value="Lelaki">Lelaki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+        <!--Address : <textarea ng-model="address"></textarea>-->
+            <br/>
+            <button type="submit">Submit</button>
+        </form>
+        
+    </body>
+
+</html>

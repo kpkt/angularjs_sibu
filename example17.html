@@ -1,0 +1,34 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <meta name="description" content="Angularjs Services">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-controller="myController">
+        {{hasil}}  <br/>      
+        {{hasild}}  <br/>      
+        {{jumlah}}  <br/>      
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('myApp',[]);
+        
+        //define myController 
+        app.controller('myController', function($scope, Kira){
+            $scope.hasil = Kira.tambah(4,5);            
+            $scope.hasild = Kira.darab(4,5);    
+            $scope.jumlah = $scope.hasil + $scope.hasild;           
+        });
+        
+        app.service('Kira',function(){
+            this.tambah = function(valX,valY){
+              return valX + valY;  
+            };
+            this.darab = function(valX,valY){
+              return valX * valY;  
+            };  
+        });                
+    </script>
+    
+</html>

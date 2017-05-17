@@ -1,0 +1,40 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <meta name="description" content="AngularJs JSON data">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-controller="myController">
+        <h1>List of Countries</h1>
+        Search : <input type="text" ng-model="keyword"/>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Population</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="country in countries | filter:keyword | orderBy:'-population'">
+                    <td>{{country.name}}</td>
+                    <td>{{country.population | number}}</td>
+                </tr>
+            </tbody>
+        
+        </table>        
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('myApp',[]);
+        
+        //define myController 
+        app.controller('myController', function($scope, $http){
+        $http.get('countries.json').then(function(results){
+                //console.log(results);
+                $scope.countries = results.data;
+            });
+        });
+    </script>
+    
+</html>

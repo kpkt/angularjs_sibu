@@ -1,0 +1,50 @@
+<html ng-app>
+    <head>
+    <title>example 5 : Angularjs Directive</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-init="cars=[{'name':'Proton','model':'Iriz'},{'name':'Toyota','model':'Vios'},{'name':'Produa','model':'Kancil'},{'name':'Honda','model':'City'}]; years=[2014,2015,2016,2017]">
+        <ul>
+            <li ng-repeat="car in cars">{{car.name}}-{{car.model}}</li>
+        </ul>
+        
+        <ul>
+            <ol ng-repeat="year in years">{{year}}</ol>
+        </ul>
+        
+        First Name : <input type="name" ng-model="fName"/>
+        <br/>
+        Last Name : <input type="name" ng-model="lName"/>
+        <br/>
+        Hello {{fName}} {{lName}}
+        
+        <br/>
+        
+        Phone Number <input type="number" ng-model="phone"/>
+        <br/>
+        Your number : {{phone}}
+        
+        
+        Select Cars : 
+        <select>
+            <option ng-repeat="car in cars">{{car.name}}</option>
+        </select>
+
+    
+        <table border="1">
+            <tr>
+                <td>Name</td>
+                <td>Model</td>
+            </tr>
+            <tr ng-repeat="car in cars">
+                <td>{{car.name}}</td>
+                <td>{{car.model}}</td>
+             
+            </tr>
+        </table>
+            
+        
+            
+        
+    </body>
+</html>

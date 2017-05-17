@@ -1,0 +1,88 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <meta name="description" content="Angularjs table with input search">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-controller="myController">
+       <h1>List of car model</h1>
+        Name:<input type="text" ng-model="name"/> 
+        Model:<input type="text" ng-model="model"/>
+        <a href="#" ng-click="new()">Add New Data</a><br/>
+        <hr/>
+        Search : <input type="text" ng-model="keyword"/>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Name</td>
+                    <td>Model</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                <!--car in cars | filter:keyword-->
+                <tr ng-repeat="car in cars | filter:{model:keyword}">
+                    <td>{{$index+1}}</td>
+                    <td>{{car.name}}</td>
+                    <td>{{car.model}}</td>
+                    <td>
+                    <a href="#" ng-click="remove(car.id)">Remove</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('myApp',[]);
+        
+        //define myController 
+        app.controller('myController', function($scope,$filter){
+            
+            $scope.cars =[
+                {'id':1,'name':'Proton','model':'Iriz'},
+                {'id':2,'name':'Toyota','model':'Vios'},
+                {'id':3,'name':'Produa','model':'Kancil'},
+                {'id':4,'name':'Honda','model':'City'}
+            ];
+            
+
+            //Function Add New Data
+            $scope.new =function(){
+                //alert('OK');
+                //console.log('OK');
+                $scope.cars.push(
+                    {
+                     'id':$scope.cars.length + 1,
+                     'name':$scope.name,
+                     'model':$scope.model
+                    }
+                );
+                
+                //clear data input
+                $scope.name = '';
+                $scope.model = '';
+            };
+            
+            //Function Remove Data
+            $scope.remove = function($id){
+                
+                //Filter by element object
+                var foundCar = $filter('filter')($scope.cars, { id: $id }, true)[0];
+
+                
+                //Find keyword in array
+                var i = $scope.cars.indexOf(foundCar);
+                //remove index from array
+                
+                //console.log($id);
+                //console.log(i);
+                $scope.cars.splice(i,1);
+            };
+            
+        });
+    </script>
+    
+</html>

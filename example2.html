@@ -1,0 +1,24 @@
+<html>
+    <head>
+    <title>example 1</title>
+    </head>
+    <body>
+        <h1>Hello</h1>
+        Name : <input id="inputName" type="text" />
+        <br/>
+        Hello <span id="outputName"></span>
+        
+        <script>
+            //get value from input text define by id inputName
+            var textInputElement = document.getElementById('inputName');
+            
+            //When user keyup value into text input
+            textInputElement.addEventListener('keyup', function(){
+                
+                //show in span with id ouputName
+                document.getElementById('outputName').innerHTML = textInputElement.value
+            });
+            
+        </script>
+    </body>
+</html>

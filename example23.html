@@ -1,0 +1,109 @@
+<html ng-app="staffApp">
+
+<head>
+    <title></title>
+    <meta name="description" content="AngularJs JSON data PHP">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <style>
+            input, select{margin: 2px 0} 
+            form span{color: #e74c3c;}
+    </style>
+</head>
+
+<body ng-controller="staffController">
+
+    <h1>List of Staff</h1>
+    <p ng-if="staffs.length <= 0">Waiting...</p>
+    <div ng-if="staffs.length > 0">
+  <form name="staffForm" novalidate>
+        First Name : <input name="fName" type="text" ng-model="fName" required/>
+        <span ng-show="staffForm.fName.$invalid && !staffForm.fName.$pristine">First Name is required.</span>
+            <br/>
+            
+        Last Name : <input name="lName" type="text" ng-model="lName" required/>
+            <span ng-show="staffForm.lName.$invalid && !staffForm.lName.$pristine">Last Name is required.</span>
+            <br/>
+            
+        Email : <input name="email" type="email" ng-model="email" required/>
+            <span ng-show="(staffForm.email.$invalid && !staffForm.email.$pristine) ||  (staffForm.phone.$touched)"> Email is invalid.</span>
+            <br/>
+            
+        Phone Number : <input name="phone" type="text" ng-model="phone" required ng-minlength="8" ng-maxlength="12"/><br/>
+            <span ng-show="staffForm.phone.$invalid && staffForm.phone.$touched"> Phone Number is required.</span>
+            <span ng-show="staffForm.phone.$error.minlength"> Phone Number is to short.</span>            
+            <span ng-show="staffForm.phone.$error.maxlength"> Phone Number is to long.</span>
+            <br/>
+        Address : <input name="address" type="text" ng-model="address" rows="5" required/>
+            <span ng-show="staffForm.address.$invalid && !staffForm.address.$pristine">Address is required.</span>
+            <br/>
+            
+        Gender : <select name="gender" ng-model="gender" required>
+                    <option value="Lelaki">Lelaki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+        <!--Address : <textarea ng-model="address"></textarea>-->
+            <br/>
+            <button type="submit">Submit</button>
+        </form>
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <td colspan="6" style="text-align:right">
+                     Search : <input type="text" ng-model="keyword" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>
+                        <a href="#" ng-click="sortField='fname'; reverse = !reverse">Name</a>
+                    </th>
+                    <th>
+                        <a href="#" ng-click="sortField='email'; reverse = !reverse">Email</a>
+                    </th>
+                    <th>
+                        <a href="#" ng-click="sortField='phone'; reverse = !reverse">Phone</a>
+                    </th>
+                    <th>Address</th>
+                    <th>
+                        <a href="#" ng-click="sortField='gender'; reverse = !reverse">Gender</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="staff in staffs | filter:keyword | orderBy:sortField:reverse">
+                    <td>{{$index +1}}</td>
+                    <td>{{staff.fname}} {{staff.lname}}</td>
+                    <td>{{staff.email}}</td>
+                    <td>{{staff.phone}}</td>
+                    <td>{{staff.address}}</td>
+                    <td>{{staff.gender}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+<script>
+    //define module of ng-app
+    var app = angular.module('staffApp', []);
+
+    //define myController 
+    app.controller('staffController', function($scope, $http,$timeout) {
+        $scope.staffs = [];
+        $scope.sortField = 'fname';
+        $scope.reverse = true;
+
+        $timeout(function() {
+           $http.get('http://localhost/staffs/api/api_index.php').then(function(results) {
+                //console.log(results);
+                $scope.staffs = results.data.data;
+            });
+        }, 100);
+
+    });
+
+</script>
+
+</html>

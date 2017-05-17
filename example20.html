@@ -1,0 +1,53 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <meta name="description" content="Angularjs multiple Controller">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-controller="myTambahController">
+            Hasil Tambah : {{hasilTambah}}
+        </div>
+        <div ng-controller="myDarabController">
+            Hasil Darab : {{hasilDarab}}
+        </div>
+        
+        <div ng-controller="myJumlahController">
+            Hasil Jumlah : {{hasilJumlah}}
+        </div>
+        
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('myApp',[]);
+        
+        //define myController 
+        app.controller('myTambahController', function($scope, Kira){
+            $scope.hasilTambah = Kira.tambah(2,5);          
+        });
+        
+        //define myController 
+        app.controller('myDarabController', function($scope, Kira){
+              $scope.hasilDarab = Kira.darab(5,9);        
+        });
+        
+        //define myController 
+        app.controller('myJumlahController', function($scope, Kira){
+              $scope.hasilJumlah = Kira.jumlah(2,4);        
+        });
+        
+        app.service('Kira',function(){
+            this.tambah = function(valX,valY){
+              return valX + valY;  
+            };
+            this.darab = function(valX,valY){
+              return valX * valY;  
+            };  
+            this.jumlah = function(valX,valY){
+              return this.tambah(valX,valY) + this.darab(valX,valY);  
+            };  
+        });                
+    </script>
+    
+</html>

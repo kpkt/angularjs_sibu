@@ -1,0 +1,30 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <meta name="description" content="Angularjs $scope">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-controller="myController">
+        First Name: <input type="text" ng-model="fName"/><br/>
+        Last Name: <input type="text" ng-model="lName"/><br/>
+        <button ng-click="getName()">Get Name</button>
+        Hello {{firstName}} {{lastName}}
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('myApp',[]);
+        
+        //define myController 
+        app.controller('myController', function($scope){
+            //On click button, get value of input
+            $scope.getName = function(){
+                //define new scope for output
+                $scope.firstName = $scope.fName;
+                $scope.lastName = $scope.lName;  
+            }
+            
+        });
+    </script>
+    
+</html>

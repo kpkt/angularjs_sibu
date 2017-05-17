@@ -1,0 +1,46 @@
+<html ng-app="calcApp">
+    <head>
+        <title></title>
+        <meta name="description" content="Angularjs $scope and expression">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body ng-controller="calcController">
+        Input One: <input type="text" ng-model="numOne"/><br/>
+        Input Two: <input type="text" ng-model="numTwo"/><br/>
+        <button ng-click="tambah()">Tambah</button> {{oTambah}}<br/>
+        <button ng-click="darab()">Darab</button> {{oDarab}}
+        <br/>
+        <button ng-click="bahagi()">Bahagi</button> {{oBahagi}}
+        <br/>
+        <button ng-click="modulus()">Mod</button> {{oModulus}}
+    </body>
+    
+    <script>
+        //define module of ng-app
+        var app = angular.module('calcApp',[]);
+        
+        //define myController 
+        app.controller('calcController', function($scope){
+            //On click button, get value of input
+            
+            //Tambah
+            $scope.tambah = function(){
+                $scope.oTambah = $scope.numOne*1 + $scope.numTwo*1;
+            };
+            //Darab
+            $scope.darab = function(){
+                $scope.oDarab = $scope.numOne*1 * $scope.numTwo*1;
+            };
+            //Bahagi
+            $scope.bahagi = function(){
+                $scope.oBahagi = $scope.numOne*1 / $scope.numTwo*1;
+            };
+            //Mod
+            $scope.modulus = function(){
+                $scope.oModulus = $scope.numOne*1 % $scope.numOne*1;
+            };
+            
+        });
+    </script>
+    
+</html>
