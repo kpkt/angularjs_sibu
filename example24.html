@@ -9,7 +9,7 @@
         select {
             margin: 2px 0
         }
-        
+
         form span {
             color: #e74c3c;
         }
@@ -19,53 +19,53 @@
 
 <body ng-controller="staffController">
 
-    <h1>List of Staff</h1>
-    <p ng-if="staffs.length <= 0">Waiting...</p>
-    <div ng-if="staffs.length > 0">
-        <form ng-submit="submitForm(staffForm.$valid)" name="staffForm" novalidate>
-            First Name : <input name="fName" type="text" ng-model="data.fName" required/>
-            <span ng-show="staffForm.fName.$invalid && !staffForm.fName.$pristine">First Name is required.</span>
-            <br/> Last Name : <input name="lName" type="text" ng-model="data.lName" required/>
+<h1>List of Staff</h1>
+<p ng-if="staffs.length <= 0">Waiting...</p>
+<div ng-if="staffs.length > 0">
+    <form ng-submit="submitForm(staffForm.$valid)" name="staffForm" novalidate>
+        First Name : <input name="fName" type="text" ng-model="data.fName" required/>
+        <span ng-show="staffForm.fName.$invalid && !staffForm.fName.$pristine">First Name is required.</span>
+        <br/> Last Name : <input name="lName" type="text" ng-model="data.lName" required/>
 
-            <button type="submit">Submit</button>
-        </form>
+        <button type="submit">Submit</button>
+    </form>
 
-        <table border="1">
-            <thead>
-                <tr>
-                    <td colspan="6" style="text-align:right">
-                        Search : <input type="text" ng-model="keyword" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Id</th>
-                    <th>
-                        <a href="#" ng-click="sortField='fname'; reverse = !reverse">Name</a>
-                    </th>
-                    <th>
-                        <a href="#" ng-click="sortField='email'; reverse = !reverse">Email</a>
-                    </th>
-                    <th>
-                        <a href="#" ng-click="sortField='phone'; reverse = !reverse">Phone</a>
-                    </th>
-                    <th>Address</th>
-                    <th>
-                        <a href="#" ng-click="sortField='gender'; reverse = !reverse">Gender</a>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="staff in staffs | filter:keyword | orderBy:sortField:reverse">
-                    <td>{{$index +1}}</td>
-                    <td>{{staff.fname}} {{staff.lname}}</td>
-                    <td>{{staff.email}}</td>
-                    <td>{{staff.phone}}</td>
-                    <td>{{staff.address}}</td>
-                    <td>{{staff.gender}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table border="1">
+        <thead>
+        <tr>
+            <td colspan="6" style="text-align:right">
+                Search : <input type="text" ng-model="keyword"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Id</th>
+            <th>
+                <a href="#" ng-click="sortField='fname'; reverse = !reverse">Name</a>
+            </th>
+            <th>
+                <a href="#" ng-click="sortField='email'; reverse = !reverse">Email</a>
+            </th>
+            <th>
+                <a href="#" ng-click="sortField='phone'; reverse = !reverse">Phone</a>
+            </th>
+            <th>Address</th>
+            <th>
+                <a href="#" ng-click="sortField='gender'; reverse = !reverse">Gender</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="staff in staffs | filter:keyword | orderBy:sortField:reverse">
+            <td>{{$index +1}}</td>
+            <td>{{staff.fname}} {{staff.lname}}</td>
+            <td>{{staff.email}}</td>
+            <td>{{staff.phone}}</td>
+            <td>{{staff.address}}</td>
+            <td>{{staff.gender}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 
@@ -73,45 +73,51 @@
     //define module of ng-app
     var app = angular.module('staffApp', []);
 
-//    app.config(['$qProvider',function($qProvider){
-//        $qProvider.errorOnUnhandledRejections(false);
-//    }]);
+    //    app.config(['$qProvider',function($qProvider){
+    //        $qProvider.errorOnUnhandledRejections(false);
+    //    }]);
     //define myController 
-    app.controller('staffController', function($scope, $http, $timeout) {
+    app.controller('staffController', function ($scope, $http, $timeout) {
+        var base_url = 'http://localhost/staffs/api/';
         $scope.data = [];
         $scope.staffs = [];
         $scope.sortField = 'fname';
         $scope.reverse = true;
 
-        $timeout(function() {
-            $http.get('http://localhost/staffs/api/api_index.php').then(function(results) {
+        $timeout(function () {
+            $http.get(base_url + 'api_index.php').then(function (results) {
                 //console.log(results);
                 $scope.staffs = results.data.data;
             });
         }, 100);
 
         //Save Data
-        $scope.submitForm = function(isValid) {
+        $scope.submitForm = function (isValid) {
 
             if (isValid) {
-                console.log($scope.data.fName);
-                
-                $http({
-//                    headers: {
-//                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-//                    },
-                    url: 'http://127.0.0.1/staffs/api/api_add.php',
-                    method: 'POST',
-                    data: {
-                        'fname': $scope.data.fName,
-                        'lname': $scope.data.lName,
-                        'email': '',
-                        'phone': '',
-                        'address': '',
-                        'gender': '',
+                var config = {
+                    dataType: 'json',
+                    cache: false,
+                    timeout: 10000,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                     }
-                }).then(function(res) {
+                };
+                var data = {
+                    'fname': $scope.data.fName,
+                    'lname': $scope.data.lName,
+                    'email': '',
+                    'phone': '',
+                    'address': '',
+                    'gender': '',
+                };
+
+                $http.post(base_url + 'api_add.php', data, config).then(function (res) {
                     console.log(res.data);
+                    if(res.data.status == 'berjaya'){
+                        //redirect to index.html
+                        window.location.href = "example24.html";
+                    }
                 });
 
             } else {
