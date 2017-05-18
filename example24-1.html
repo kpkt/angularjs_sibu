@@ -110,7 +110,7 @@
                     'address': '',
                     'gender': '',
                 };
-//$http.post(url,data,[config])
+//$http.post(url,data,config)
                 $http.post(base_url + 'api_add.php', data, config).then(function (res) {
                     console.log(res.data);
                     if (res.data.status == 'berjaya') {
@@ -119,8 +119,8 @@
                         $scope.staffs.push(
                             {
                                 'id':staff.data.id,
-                                'fname': staff.data.name[0],
-                                'lname': staff.data.name[1],
+                                'fname': staff.data.fname,
+                                'lname': staff.data.lname,
                                 'email': '',
                                 'phone': '',
                                 'address': '',
